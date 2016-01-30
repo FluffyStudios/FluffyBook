@@ -21,10 +21,15 @@ public class TheBook : MonoBehaviour
     public SpriteRenderer[] Bubbles;
     public Sprite BlankBubble;
     public Transform VignetteContainer;
-        
+
+    public AudioSource KeyStrikeSound;
+    public AudioSource VictorySound;
+    public AudioSource FlashSound;
+
     private string currentInputText;
     private List<string> foundKeyWords;
     private Vignette[] vignettes;
+    private bool win;
 
     private void Awake()
     {
@@ -45,11 +50,15 @@ public class TheBook : MonoBehaviour
         }
     }
 
+    public void SoundKeyboard()
+    {
+        this.KeyStrikeSound.Play();
+    }
+
     public void OnInputTextChange()
     {
-        this.ScreenshotButton.SetActive(false);
         this.StoryLabel.text = this.InputText.text;
-        this.currentInputText = this.InputText.text.Replace(",", string.Empty);
+        this.currentInputText = this.InputText.text.Replace(",", string.Empty).Replace(".", string.Empty);
         string[] words = this.currentInputText.Split(' ');
         this.foundKeyWords.Clear();
         
@@ -84,10 +93,25 @@ public class TheBook : MonoBehaviour
                 this.vignettes[i].gameObject.SetActive(!this.foundKeyWords.Contains(this.vignettes[i].KeyWord));
             }
         }
-        
-        if (this.foundKeyWords.Count >= 6)
+
+        if (this.foundKeyWords.Count < 6)
         {
-            this.ScreenshotButton.SetActive(true);
+            if (this.win)
+            {
+                this.win = false;
+                this.ScreenshotButton.SetActive(false);
+            }
+        }        
+
+        if (this.foundKeyWords.Count >= 6)
+        {            
+            if (!this.win)
+            {
+                this.win = true;
+                this.VictorySound.Play();
+                this.ScreenshotButton.SetActive(true);
+            }
+
             foreach (Vignette vignette in this.vignettes)
             {
                 vignette.gameObject.SetActive(false);
@@ -107,11 +131,6 @@ public class TheBook : MonoBehaviour
         this.GuiPanel.SetActive(false);
     }
 
-    public void GameOver()
-    {
-        
-    }
-
     public void TakeScreenshot()
     {
         this.StartCoroutine(this.TakeScreenshotCoroutine());
@@ -126,6 +145,7 @@ public class TheBook : MonoBehaviour
 
         Application.CaptureScreenshot(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Boris.png");
         this.StartCoroutine(this.CameraManager.FlashPhoto());
+        this.FlashSound.Play();
 
         yield return new WaitForSeconds(0.8f);
 

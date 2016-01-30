@@ -16,7 +16,7 @@ Platform assembly: C:\Users\thiba\Documents\UnityProjects\FluffyBook\UnityProjec
 Loading C:\Users\thiba\Documents\UnityProjects\FluffyBook\UnityProject\BUild\Boris_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: C:\Users\thiba\Documents\UnityProjects\FluffyBook\UnityProject\BUild\Boris_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\thiba\Documents\UnityProjects\FluffyBook\UnityProject\BUild\Boris_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.128 seconds
+- Completed reload, in  0.138 seconds
 Platform assembly: C:\Users\thiba\Documents\UnityProjects\FluffyBook\UnityProject\BUild\Boris_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\thiba\Documents\UnityProjects\FluffyBook\UnityProject\BUild\Boris_Data\Managed\System.dll (this message is harmless)
 desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
@@ -26,5 +26,5 @@ XInput1_3.dll not found. Trying XInput9_1_0.dll instead...
 <RI> Initialized touch support.
 UnloadTime: 0.710758 ms
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: 292c -> priority: 1 
-  Thread -> id: 2224 -> priority: 1 
+  Thread -> id: 322c -> priority: 1 
+  Thread -> id: 3108 -> priority: 1 
