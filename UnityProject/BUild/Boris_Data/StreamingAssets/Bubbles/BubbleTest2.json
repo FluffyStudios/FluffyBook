@@ -1,0 +1,8 @@
+{
+	"Name" : "BubbleTest2",
+	"BackgroundImage" : "BubbleBackground2",
+	"FirstChoiceImage" : "ChoiceButtonPlaceholder",
+	"FirstChoicePosition" : "0,0",
+	"SecondChoiceImage" : "ChoiceButtonPlaceholder",
+	"SecondChoicePosition" : "-50,-50"
+}
