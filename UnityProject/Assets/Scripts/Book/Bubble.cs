@@ -5,7 +5,11 @@ using System.Collections.Generic;
 
 public partial class Bubble : MonoBehaviour
 {
-    public static string bubblesPath = Application.streamingAssetsPath + "/Bubbles/";
+    public static string Path = Application.streamingAssetsPath + "/Bubbles";
+    public static float BubbleWidth = 288f / 100f;
+    public static float BubbleHeight = 255f / 100f;
+
+    public SpriteRenderer Background;
 
     public string Name
     {
@@ -19,18 +23,17 @@ public partial class Bubble : MonoBehaviour
         set;
     }
 
-    public Bubble(string bubbleName)
+    public void Initialize(string name)
     {
-        BubbleInfo info = JsonUtility.FromJson<BubbleInfo>(File.ReadAllText(bubblesPath + bubbleName + ".json"));
+        BubbleInfo info = JsonUtility.FromJson<BubbleInfo>(File.ReadAllText(Bubble.Path + "/" + name + ".json"));
 
         this.Name = info.Name;
-        this.Size = new Vector2(info.Width, info.Height);
+        this.Background.sprite = Resources.Load<Sprite>(info.BackgroundImage);
     }
 
     public class BubbleInfo
     {
         public string Name;
-        public float Width;
-        public float Height; 
+        public string BackgroundImage;
     }
 }
