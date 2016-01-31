@@ -10,21 +10,21 @@ using System.Collections;
 
 public class TheBook : MonoBehaviour
 {
-    public GameObject GuiPanel;
-    public CameraManager CameraManager;
-    public Text InputText;
-    public GameObject InputField;
-    public Text StoryLabel;
-    public GameObject ScreenshotButton;
-    public string[] KeyWords;
-    public Sprite[] VignettesSprites;
-    public SpriteRenderer[] Bubbles;
-    public Sprite BlankBubble;
-    public Transform VignetteContainer;
-
     public AudioSource KeyStrikeSound;
     public AudioSource VictorySound;
     public AudioSource FlashSound;
+    public CameraManager CameraManager;
+    public GameObject GuiPanel;
+    public GameObject InputField;
+    public GameObject ScreenshotButton;
+    public Text InputText;
+    public Text StoryLabel;
+    public Transform VignetteContainer;
+    public Sprite BlankBubble;
+    public SpriteRenderer[] Bubbles;
+    public string[] KeyWords;
+    public Sprite[] VignettesSprites;
+
 
     private string currentInputText;
     private List<string> foundKeyWords;
@@ -140,14 +140,14 @@ public class TheBook : MonoBehaviour
     {
         this.InputField.gameObject.SetActive(false);
         this.ScreenshotButton.gameObject.SetActive(false);
+        this.FlashSound.Play();
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.25f);
 
         Application.CaptureScreenshot(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Boris.png");
         this.StartCoroutine(this.CameraManager.FlashPhoto());
-        this.FlashSound.Play();
 
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.75f);
 
         this.InputField.gameObject.SetActive(true);
         this.ScreenshotButton.gameObject.SetActive(true);
