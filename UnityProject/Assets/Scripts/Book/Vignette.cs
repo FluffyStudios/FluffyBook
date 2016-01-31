@@ -3,5 +3,5 @@ using System.Collections;
 
 public class Vignette : MonoBehaviour
 {
-    public string KeyWord;	
+    public string KeyWord;    
 }

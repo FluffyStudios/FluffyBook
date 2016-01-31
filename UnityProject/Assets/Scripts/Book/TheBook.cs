@@ -13,6 +13,7 @@ public class TheBook : MonoBehaviour
     public AudioSource KeyStrikeSound;
     public AudioSource VictorySound;
     public AudioSource FlashSound;
+    public AudioSource DrawingSound;
     public CameraManager CameraManager;
     public GameObject GuiPanel;
     public GameObject InputField;
@@ -44,7 +45,7 @@ public class TheBook : MonoBehaviour
 
     private void Update()
     {
-        if (Input.anyKeyDown)
+        if (Input.anyKey)
         {
             this.OnInputTextChange();
         }
@@ -57,7 +58,6 @@ public class TheBook : MonoBehaviour
 
     public void OnInputTextChange()
     {
-        this.StoryLabel.text = this.InputText.text;
         this.currentInputText = this.InputText.text.Replace(",", string.Empty).Replace(".", string.Empty);
         string[] words = this.currentInputText.Split(' ');
         this.foundKeyWords.Clear();
@@ -79,18 +79,38 @@ public class TheBook : MonoBehaviour
                 if (i < this.foundKeyWords.Count)
                 {
                     int vignetteIndex = Array.IndexOf(this.KeyWords, this.foundKeyWords[i]);
-                    this.Bubbles[i].sprite = this.VignettesSprites[vignetteIndex];
+
+                    if (this.Bubbles[i].color.a != 1)
+                    {
+                        this.Bubbles[i].color = new Color(this.Bubbles[i].color.r, this.Bubbles[i].color.g, this.Bubbles[i].color.b, 0);
+                        this.Bubbles[i].sprite = this.VignettesSprites[vignetteIndex];
+                        this.Bubbles[i].SendMessage("Show", false, SendMessageOptions.DontRequireReceiver);
+                        //this.DrawingSound.Play();
+                    }
+                    else
+                    {
+                        this.Bubbles[i].sprite = this.VignettesSprites[vignetteIndex];
+                        this.Bubbles[i].SendMessage("Show", true, SendMessageOptions.DontRequireReceiver);
+                        //this.DrawingSound.Play();
+                    }
                 }
                 else
                 {
-                    this.Bubbles[i].sprite = this.BlankBubble;
+                    this.Bubbles[i].SendMessage("Hide", false, SendMessageOptions.DontRequireReceiver);
                 }
             }
 
             //Disable left vignettes
             for (int i = 0; i < this.vignettes.Length; ++i)
             {
-                this.vignettes[i].gameObject.SetActive(!this.foundKeyWords.Contains(this.vignettes[i].KeyWord));
+                if (this.foundKeyWords.Contains(this.vignettes[i].KeyWord))
+                {
+                    this.vignettes[i].gameObject.SendMessage("Hide", false, SendMessageOptions.DontRequireReceiver);
+                }
+                else
+                {
+                    this.vignettes[i].gameObject.SendMessage("Show", false, SendMessageOptions.DontRequireReceiver);
+                }
             }
         }
 
@@ -114,8 +134,15 @@ public class TheBook : MonoBehaviour
 
             foreach (Vignette vignette in this.vignettes)
             {
-                vignette.gameObject.SetActive(false);
+                vignette.gameObject.SendMessage("Hide", true, SendMessageOptions.DontRequireReceiver);
             }
+        }
+        
+        // Coloring keywords
+        this.StoryLabel.text = this.InputText.text;
+        for (int i = 0; i < this.foundKeyWords.Count; ++i)
+        {
+            this.StoryLabel.text = this.StoryLabel.text.Replace(this.foundKeyWords[i], "<color='#BC001C'>" + this.foundKeyWords[i] + "</color>");
         }
     }
 
