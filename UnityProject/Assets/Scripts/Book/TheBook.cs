@@ -64,7 +64,7 @@ public class TheBook : MonoBehaviour
         
         for (int i = 0; i < words.Length; ++i)
         {
-            string word = words[i].ToLower();
+            string word = words[i];
             if (this.KeyWords.Contains(word) && !this.foundKeyWords.Contains(word))
             {
                 this.foundKeyWords.Add(word);
@@ -171,7 +171,7 @@ public class TheBook : MonoBehaviour
 
         yield return new WaitForSeconds(0.25f);
 
-        Application.CaptureScreenshot(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Boris.png");
+        Application.CaptureScreenshot(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "/Boris.png");
         this.StartCoroutine(this.CameraManager.FlashPhoto());
 
         yield return new WaitForSeconds(0.75f);
