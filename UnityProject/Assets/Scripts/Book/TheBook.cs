@@ -17,6 +17,7 @@ public class TheBook : MonoBehaviour
     public CameraManager CameraManager;
     public GameObject GuiPanel;
     public GameObject InputField;
+    public GameObject BackgroundInputField;
     public GameObject ScreenshotButton;
     public Text InputText;
     public Text StoryLabel;
@@ -166,6 +167,7 @@ public class TheBook : MonoBehaviour
     private IEnumerator TakeScreenshotCoroutine()
     {
         this.InputField.gameObject.SetActive(false);
+        this.BackgroundInputField.gameObject.SetActive(false);
         this.ScreenshotButton.gameObject.SetActive(false);
         this.FlashSound.Play();
 
@@ -177,6 +179,7 @@ public class TheBook : MonoBehaviour
         yield return new WaitForSeconds(0.75f);
 
         this.InputField.gameObject.SetActive(true);
+        this.BackgroundInputField.gameObject.SetActive(true);
         this.ScreenshotButton.gameObject.SetActive(true);
     }
 }
